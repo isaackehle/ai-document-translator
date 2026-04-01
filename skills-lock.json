@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "skills": {
+    "fastapi-templates": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "computedHash": "8fdfb9bad6aef892b4f16ef3b07ef5eea3b0497d37eeaeddb07244d657cc8711"
+    },
+    "git-commit": {
+      "source": "github/awesome-copilot",
+      "sourceType": "github",
+      "computedHash": "2607fc60629b82b257136dd2a7a373f0a4466c0b49df7746d845d59313c99b21"
+    },
+    "prompt-builder": {
+      "source": "github/awesome-copilot",
+      "sourceType": "github",
+      "computedHash": "1591d452ec2ba6d70faaa96b481f7c8261a280df838fee9c5295804fa28acbd3"
+    },
+    "python-code-style": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "computedHash": "35ed0c437f33462187b0a89da8e5bfe9ac259dbc8731257c5445f1a5e1229acf"
+    },
+    "python-design-patterns": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "computedHash": "f263ed30e7627f1f22aea99f0f098b73a9f3b5f1c9ea36d3a31a787eacf2e07e"
+    },
+    "python-testing-patterns": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "computedHash": "69915bb276b6aec61fe5b283a933f96584f66d14b616ce2060d95757629c6866"
+    },
+    "writing-plans": {
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "computedHash": "bfaed11054ad8021c66860244e2d2e0d1eca483ae9f5fbfcb956e99c61f5c3d7"
+    }
+  }
+}
