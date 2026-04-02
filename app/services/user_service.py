@@ -57,22 +57,22 @@ class UserService:
     ) -> Optional[User]:
         """
         Authenticate user with email and password.
-
+        
         Args:
             db: Database session
             email: User email
             password: Plain text password
-
+            
         Returns:
             Optional[User]: User if authenticated
         """
         user = await self.repository.get_by_email(db, email)
         if not user:
             return None
-        if not verify_password(password, user.hashed_password):
+        if not verify_password(password, str(user.hashed_password)):  # type: ignore[arg-type]
             return None
         return user
-
+    
     async def update_user(
         self,
         db: AsyncSession,
@@ -81,19 +81,19 @@ class UserService:
     ) -> Optional[User]:
         """
         Update user.
-
+        
         Args:
             db: Database session
             user_id: User ID
             user_in: Update data
-
+            
         Returns:
             Optional[User]: Updated user
         """
         user = await self.repository.get(db, user_id)
         if not user:
             return None
-
+        
         # Hash password if provided
         if user_in.password:
             update_data = user_in.model_dump(exclude_unset=True)
@@ -101,7 +101,7 @@ class UserService:
                 update_data.pop("password")
             )
             user_in = UserUpdate(**update_data)
-
+        
         return await self.repository.update(db, user, user_in)
 
 

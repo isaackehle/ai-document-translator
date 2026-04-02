@@ -1,0 +1,16 @@
+{
+  "include": ["app"],
+  "exclude": ["**/__pycache__", ".venv", "venv"],
+  "reportMissingImports": "warning",
+  "reportMissingTypeStubs": false,
+  "reportGeneralTypeIssues": "warning",
+  "reportOptionalMemberAccess": "warning",
+  "reportOptionalSubscript": "warning",
+  "reportPrivateImportUsage": "warning",
+  "reportUnboundVariable": "warning",
+  "reportAttributeAccessIssue": "warning",
+  "reportIncompatibleMethodOverride": "warning",
+  "pythonVersion": "3.14",
+  "typeCheckingMode": "basic",
+  "useLibraryCodeForTypes": true
+}

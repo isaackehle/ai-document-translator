@@ -42,8 +42,7 @@ class UserRepository(BaseRepository[User, UserCreate, UserUpdate]):
             bool: True if user is active
         """
         user = await self.get(db, user_id)
-        return user.is_active if user else False
-
+        return bool(user.is_active) if user else False  # type: ignore[arg-type]
 
 # Singleton instance
 user_repository = UserRepository(User)

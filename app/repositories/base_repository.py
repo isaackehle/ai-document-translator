@@ -2,9 +2,10 @@
 from typing import Generic, TypeVar, Type, Optional, List
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import DeclarativeBase
 from pydantic import BaseModel
 
-ModelType = TypeVar("ModelType")
+ModelType = TypeVar("ModelType", bound=DeclarativeBase)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
 UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
@@ -65,27 +66,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         result = await db.execute(
             select(self.model).offset(skip).limit(limit)
         )
-        return result.scalars().all()
-
-    async def create(
-        self,
-        db: AsyncSession,
-        obj_in: CreateSchemaType
-    ) -> ModelType:
-        """
-        Create new record.
-
-        Args:
-            db: Database session
-            obj_in: Pydantic schema with creation data
-
-        Returns:
-            ModelType: Created record
-        """
-        db_obj = self.model(**obj_in.model_dump())
-        db.add(db_obj)
-        await db.flush()
-        await db.refresh(db_obj)
+        return list(result.scalars().all())
         return db_obj
 
     async def update(
