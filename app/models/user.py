@@ -1,6 +1,6 @@
 """User database model."""
-from sqlalchemy import Column, Integer, String, Boolean, DateTime
-from sqlalchemy.sql import func
+
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, text
 from app.core.database import Base
 
 
@@ -15,11 +15,11 @@ class User(Base):
     full_name = Column(String(255), nullable=True)
     is_active = Column(Boolean, default=True, nullable=False)
     is_superuser = Column(Boolean, default=False, nullable=False)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    created_at = Column(DateTime(timezone=True), server_default=text("now()"))
     updated_at = Column(
         DateTime(timezone=True),
-        server_default=func.now(),
-        onupdate=func.now()
+        server_default=text("now()"),
+        onupdate=text("now()"),
     )
 
     def __repr__(self) -> str:

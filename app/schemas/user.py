@@ -1,4 +1,5 @@
 """User Pydantic schemas for request/response validation."""
+
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional
 from datetime import datetime
@@ -15,7 +16,9 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     """Schema for user creation."""
 
-    password: str = Field(..., min_length=8, description="Password must be at least 8 characters")
+    password: str = Field(
+        ..., min_length=8, description="Password must be at least 8 characters"
+    )
 
 
 class UserUpdate(BaseModel):
@@ -42,4 +45,4 @@ class UserInDB(UserBase):
 class User(UserInDB):
     """Schema for user response."""
 
-    pass
+    model_config = {"from_attributes": True}

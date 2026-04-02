@@ -1,0 +1,3 @@
+# Ignore Alembic migrations directory
+# Alembic uses runtime magic that Pylance cannot analyze
+alembic/**

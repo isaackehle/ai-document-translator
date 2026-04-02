@@ -1,4 +1,5 @@
 """Test database connection."""
+
 import asyncio
 import asyncpg
 from app.core.config import settings
@@ -29,7 +30,9 @@ async def test_connection():
         print(f"User: {user}")
 
         # Check for tables
-        tables = await conn.fetch("SELECT tablename FROM pg_tables WHERE schemaname = 'public'")
+        tables = await conn.fetch(
+            "SELECT tablename FROM pg_tables WHERE schemaname = 'public'"
+        )
         if tables:
             print(f"\n📊 Tables found: {[t['tablename'] for t in tables]}")
         else:

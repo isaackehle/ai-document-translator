@@ -1,4 +1,5 @@
 """Base repository for CRUD operations."""
+
 from typing import Generic, TypeVar, Type, Optional, List
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -26,31 +27,24 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         self.model = model
 
-    async def get(
-        self,
-        db: AsyncSession,
-        id: int
-    ) -> Optional[ModelType]:
+    async def get(self, db: AsyncSession, record_id: int) -> Optional[ModelType]:
         """
         Get record by ID.
 
         Args:
             db: Database session
-            id: Record ID
+            record_id: Record ID
 
         Returns:
             Optional[ModelType]: Record if found
         """
         result = await db.execute(
-            select(self.model).where(self.model.id == id)
+            select(self.model).where(getattr(self.model, "id") == record_id)
         )
         return result.scalars().first()
 
     async def get_multi(
-        self,
-        db: AsyncSession,
-        skip: int = 0,
-        limit: int = 100
+        self, db: AsyncSession, skip: int = 0, limit: int = 100
     ) -> List[ModelType]:
         """
         Get multiple records with pagination.
@@ -63,17 +57,28 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         Returns:
             List[ModelType]: List of records
         """
-        result = await db.execute(
-            select(self.model).offset(skip).limit(limit)
-        )
+        result = await db.execute(select(self.model).offset(skip).limit(limit))
         return list(result.scalars().all())
+
+    async def create(self, db: AsyncSession, obj_in: CreateSchemaType) -> ModelType:
+        """
+        Create new record.
+
+        Args:
+            db: Database session
+            obj_in: Pydantic schema with creation data
+
+        Returns:
+            ModelType: Created record
+        """
+        db_obj = self.model(**obj_in.model_dump())
+        db.add(db_obj)
+        await db.flush()
+        await db.refresh(db_obj)
         return db_obj
 
     async def update(
-        self,
-        db: AsyncSession,
-        db_obj: ModelType,
-        obj_in: UpdateSchemaType
+        self, db: AsyncSession, db_obj: ModelType, obj_in: UpdateSchemaType
     ) -> ModelType:
         """
         Update record.
@@ -93,22 +98,18 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         await db.refresh(db_obj)
         return db_obj
 
-    async def delete(
-        self,
-        db: AsyncSession,
-        id: int
-    ) -> bool:
+    async def delete(self, db: AsyncSession, record_id: int) -> bool:
         """
         Delete record.
 
         Args:
             db: Database session
-            id: Record ID
+            record_id: Record ID
 
         Returns:
             bool: True if deleted
         """
-        obj = await self.get(db, id)
+        obj = await self.get(db, record_id)
         if obj:
             await db.delete(obj)
             return True

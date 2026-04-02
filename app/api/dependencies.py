@@ -45,6 +45,11 @@ async def get_current_user(
         raise credentials_exception
 
     user = await user_repository.get(db, user_id)
+    if user is None:
+        raise credentials_exception
+
+    return user
+
 
 async def get_current_active_user(
     current_user: User = Depends(get_current_user)

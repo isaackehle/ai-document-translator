@@ -1,10 +1,11 @@
 """Database migrations configuration."""
+
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
-from alembic import context
+from alembic import context  # type: ignore
 
 # Import your models
 from app.core.database import Base
@@ -43,9 +44,25 @@ def run_migrations_offline():
 def run_migrations_online():
     """Run migrations in 'online' mode."""
     # Use synchronous driver for migrations
-    configuration = alembic_config.get_section(
-        alembic_config.config_ini_section
-    )
+    configuration = alembic_config.get_section(alembic_config.config_ini_section)
     # Replace asyncpg with psycopg2 for migrations
     url = get_url().replace("postgresql+asyncpg://", "postgresql://")
     configuration["sqlalchemy.url"] = url
+
+    connectable = engine_from_config(
+        configuration,
+        prefix="sqlalchemy.",
+        poolclass=pool.NullPool,
+    )
+
+    with connectable.connect() as connection:
+        context.configure(connection=connection, target_metadata=target_metadata)
+
+        with context.begin_transaction():
+            context.run_migrations()
+
+
+if context.is_offline_mode():
+    run_migrations_offline()
+else:
+    run_migrations_online()

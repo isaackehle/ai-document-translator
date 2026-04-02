@@ -9,7 +9,7 @@ from app.api.v1.router import api_router
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(_app: FastAPI):  # noqa: F841
     """Application lifespan events."""
     # Startup
     await database.connect()

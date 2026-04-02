@@ -1,7 +1,7 @@
 """User API endpoints."""
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from typing import List
 
 from app.core.database import get_db
 from app.api.dependencies import get_current_user
@@ -15,12 +15,9 @@ router = APIRouter()
     "/",
     response_model=User,
     status_code=status.HTTP_201_CREATED,
-    summary="Create new user"
+    summary="Create new user",
 )
-async def create_user(
-    user_in: UserCreate,
-    db: AsyncSession = Depends(get_db)
-) -> User:
+async def create_user(user_in: UserCreate, db: AsyncSession = Depends(get_db)) -> User:
     """
     Create a new user.
 
@@ -38,17 +35,11 @@ async def create_user(
         user = await user_service.create_user(db, user_in)
         return user
     except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=400, detail=str(e)) from e
 
 
-@router.get(
-    "/me",
-    response_model=User,
-    summary="Get current user"
-)
-async def read_current_user(
-    current_user: User = Depends(get_current_user)
-) -> User:
+@router.get("/me", response_model=User, summary="Get current user")
+async def read_current_user(current_user: User = Depends(get_current_user)) -> User:
     """
     Get current authenticated user.
 
@@ -58,15 +49,11 @@ async def read_current_user(
     return current_user
 
 
-@router.get(
-    "/{user_id}",
-    response_model=User,
-    summary="Get user by ID"
-)
+@router.get("/{user_id}", response_model=User, summary="Get user by ID")
 async def read_user(
     user_id: int,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),  # noqa: F841
 ) -> User:
     """
     Get user by ID.
@@ -74,7 +61,7 @@ async def read_user(
     Args:
         user_id: User ID
         db: Database session
-        current_user: Current authenticated user
+        current_user: Current authenticated user (used for auth)
 
     Returns:
         User: User data
@@ -88,16 +75,12 @@ async def read_user(
     return user
 
 
-@router.patch(
-    "/{user_id}",
-    response_model=User,
-    summary="Update user"
-)
+@router.patch("/{user_id}", response_model=User, summary="Update user")
 async def update_user(
     user_id: int,
     user_in: UserUpdate,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ) -> User:
     """
     Update user.
@@ -124,14 +107,12 @@ async def update_user(
 
 
 @router.delete(
-    "/{user_id}",
-    status_code=status.HTTP_204_NO_CONTENT,
-    summary="Delete user"
+    "/{user_id}", status_code=status.HTTP_204_NO_CONTENT, summary="Delete user"
 )
 async def delete_user(
     user_id: int,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     """
     Delete user.
