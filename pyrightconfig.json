@@ -10,6 +10,7 @@
   "reportUnboundVariable": "warning",
   "reportAttributeAccessIssue": "warning",
   "reportIncompatibleMethodOverride": "warning",
+  "reportUnusedParameter": "none",
   "pythonVersion": "3.14",
   "typeCheckingMode": "basic",
   "useLibraryCodeForTypes": true

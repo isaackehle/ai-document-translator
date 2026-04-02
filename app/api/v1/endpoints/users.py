@@ -53,7 +53,7 @@ async def read_current_user(current_user: User = Depends(get_current_user)) -> U
 async def read_user(
     user_id: int,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),  # noqa: F841
+    _current_user: User = Depends(get_current_user),
 ) -> User:
     """
     Get user by ID.
@@ -61,7 +61,7 @@ async def read_user(
     Args:
         user_id: User ID
         db: Database session
-        current_user: Current authenticated user (used for auth)
+        current_user: Current authenticated user (used for auth only)
 
     Returns:
         User: User data
