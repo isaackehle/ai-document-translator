@@ -1,33 +1,31 @@
 """User Pydantic schemas for request/response validation."""
 
-from pydantic import BaseModel, EmailStr, Field
-from typing import Optional
 from datetime import datetime
+
+from pydantic import BaseModel, EmailStr, Field
 
 
 class UserBase(BaseModel):
     """Base user schema."""
 
     email: EmailStr
-    full_name: Optional[str] = None
-    is_active: Optional[bool] = True
+    full_name: str | None = None
+    is_active: bool | None = True
 
 
 class UserCreate(UserBase):
     """Schema for user creation."""
 
-    password: str = Field(
-        ..., min_length=8, description="Password must be at least 8 characters"
-    )
+    password: str = Field(..., min_length=8, description="Password must be at least 8 characters")
 
 
 class UserUpdate(BaseModel):
     """Schema for user update."""
 
-    email: Optional[EmailStr] = None
-    full_name: Optional[str] = None
-    password: Optional[str] = Field(None, min_length=8)
-    is_active: Optional[bool] = None
+    email: EmailStr | None = None
+    full_name: str | None = None
+    password: str | None = Field(None, min_length=8)
+    is_active: bool | None = None
 
 
 class UserInDB(UserBase):

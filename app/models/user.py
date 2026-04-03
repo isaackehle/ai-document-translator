@@ -1,6 +1,7 @@
 """User database model."""
 
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, text
+from sqlalchemy import Boolean, Column, DateTime, Integer, String, text
+
 from app.core.database import Base
 
 

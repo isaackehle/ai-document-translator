@@ -1,10 +1,10 @@
 """User service for business logic."""
 
-from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.repositories.user_repository import user_repository
-from app.schemas.user import UserCreate, UserUpdate, User
+
 from app.core.security import get_password_hash, verify_password
+from app.repositories.user_repository import user_repository
+from app.schemas.user import User, UserCreate, UserUpdate
 
 
 class UserService:
@@ -38,17 +38,13 @@ class UserService:
 
         # Hash password
         user_in_dict = user_in.model_dump()
-        user_in_dict["hashed_password"] = get_password_hash(
-            user_in_dict.pop("password")
-        )
+        user_in_dict["hashed_password"] = get_password_hash(user_in_dict.pop("password"))
 
         # Create user
-        user = await self.repository.create(db, UserCreate(**user_in_dict))  # type: ignore[attr-defined]
+        user = await self.repository.create(db, UserCreate(**user_in_dict))  # pyright: ignore[reportCallIssue]
         return user
 
-    async def authenticate(
-        self, db: AsyncSession, email: str, password: str
-    ) -> Optional[User]:
+    async def authenticate(self, db: AsyncSession, email: str, password: str) -> User | None:
         """
         Authenticate user with email and password.
 
@@ -63,13 +59,11 @@ class UserService:
         user = await self.repository.get_by_email(db, email)
         if not user:
             return None
-        if not verify_password(password, str(user.hashed_password)):  # type: ignore[arg-type]
+        if not verify_password(password, str(user.hashed_password)):  # pyright: ignore[reportArgumentType]
             return None
         return user
 
-    async def update_user(
-        self, db: AsyncSession, user_id: int, user_in: UserUpdate
-    ) -> Optional[User]:
+    async def update_user(self, db: AsyncSession, user_id: int, user_in: UserUpdate) -> User | None:
         """
         Update user.
 
@@ -88,9 +82,7 @@ class UserService:
         # Hash password if provided
         if user_in.password:
             update_data = user_in.model_dump(exclude_unset=True)
-            update_data["hashed_password"] = get_password_hash(
-                update_data.pop("password")
-            )
+            update_data["hashed_password"] = get_password_hash(update_data.pop("password"))
             user_in = UserUpdate(**update_data)
 
         return await self.repository.update(db, user, user_in)

@@ -3,8 +3,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.database import get_db
 from app.api.dependencies import get_current_user
+from app.core.database import get_db
 from app.schemas.user import User, UserCreate, UserUpdate
 from app.services.user_service import user_service
 
@@ -61,7 +61,7 @@ async def read_user(
     Args:
         user_id: User ID
         db: Database session
-        current_user: Current authenticated user (used for auth only)
+        _current_user: Current authenticated user (used for auth only)
 
     Returns:
         User: User data
@@ -106,9 +106,7 @@ async def update_user(
     return user
 
 
-@router.delete(
-    "/{user_id}", status_code=status.HTTP_204_NO_CONTENT, summary="Delete user"
-)
+@router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT, summary="Delete user")
 async def delete_user(
     user_id: int,
     db: AsyncSession = Depends(get_db),

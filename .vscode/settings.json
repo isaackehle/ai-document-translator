@@ -1,4 +1,14 @@
 {
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.fixAll.pylance": "explicit",
+      "source.organizeImports": "explicit",
+      "source.organizeImports.pylance": "explicit"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true
+  },
   "cSpell.words": [
     "asyncio",
     "asyncpg",
@@ -19,31 +29,23 @@
     "uvicorn",
     "venv"
   ],
-  "python.analysis.autoImportCompletions": true,
-  "python.linting.enabled": true,
-  "python.linting.pylintEnabled": false,
-  "python.linting.flake8Enabled": true,
-  "python.analysis.exclude": [
-    "alembic/**"
-  ],
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
-    "source.organizeImports": "explicit"
+    "source.organizeImports": "explicit",
+    "source.organizeImports.pylance": "explicit"
   },
   "editor.quickSuggestions": {
     "strings": true
   },
+  "python.analysis.autoImportCompletions": true,
   "python.analysis.diagnosticMode": "workspace",
   "python.autoComplete.extraPaths": [
     ".",
     "./app"
   ],
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.fixAll": "explicit",
-      "source.organizeImports": "explicit"
-    }
-  }
+  "python.linting.enabled": true,
+  "python.linting.flake8Enabled": true,
+  "python.linting.pylintEnabled": false,
+  "ruff.enable": true,
+  "ruff.organizeImports": true
 }

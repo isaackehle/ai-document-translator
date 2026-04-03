@@ -1,10 +1,11 @@
 """Base repository for CRUD operations."""
 
-from typing import Generic, TypeVar, Type, Optional, List
+from typing import Generic, TypeVar
+
+from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import DeclarativeBase
-from pydantic import BaseModel
 
 ModelType = TypeVar("ModelType", bound=DeclarativeBase)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
@@ -18,7 +19,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     Provides generic CRUD operations for database models.
     """
 
-    def __init__(self, model: Type[ModelType]):
+    def __init__(self, model: type[ModelType]):
         """
         Initialize repository.
 
@@ -27,7 +28,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         self.model = model
 
-    async def get(self, db: AsyncSession, record_id: int) -> Optional[ModelType]:
+    async def get(self, db: AsyncSession, record_id: int) -> ModelType | None:
         """
         Get record by ID.
 
@@ -38,14 +39,10 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         Returns:
             Optional[ModelType]: Record if found
         """
-        result = await db.execute(
-            select(self.model).where(getattr(self.model, "id") == record_id)
-        )
+        result = await db.execute(select(self.model).where(getattr(self.model, "id") == record_id))
         return result.scalars().first()
 
-    async def get_multi(
-        self, db: AsyncSession, skip: int = 0, limit: int = 100
-    ) -> List[ModelType]:
+    async def get_multi(self, db: AsyncSession, skip: int = 0, limit: int = 100) -> list[ModelType]:
         """
         Get multiple records with pagination.
 

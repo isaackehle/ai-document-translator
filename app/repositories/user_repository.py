@@ -1,20 +1,17 @@
 """User repository for database operations."""
-from typing import Optional
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.models.user import User
-from app.schemas.user import UserCreate, UserUpdate
 from app.repositories.base_repository import BaseRepository
+from app.schemas.user import UserCreate, UserUpdate
 
 
 class UserRepository(BaseRepository[User, UserCreate, UserUpdate]):
     """User-specific repository with custom queries."""
 
-    async def get_by_email(
-        self,
-        db: AsyncSession,
-        email: str
-    ) -> Optional[User]:
+    async def get_by_email(self, db: AsyncSession, email: str) -> User | None:
         """
         Get user by email.
 
@@ -25,9 +22,7 @@ class UserRepository(BaseRepository[User, UserCreate, UserUpdate]):
         Returns:
             Optional[User]: User if found
         """
-        result = await db.execute(
-            select(User).where(User.email == email)
-        )
+        result = await db.execute(select(User).where(User.email == email))
         return result.scalars().first()
 
     async def is_active(self, db: AsyncSession, user_id: int) -> bool:
@@ -42,7 +37,8 @@ class UserRepository(BaseRepository[User, UserCreate, UserUpdate]):
             bool: True if user is active
         """
         user = await self.get(db, user_id)
-        return bool(user.is_active) if user else False  # type: ignore[arg-type]
+        return bool(user.is_active) if user else False  # pyright: ignore[reportOptionalOperand]
+
 
 # Singleton instance
 user_repository = UserRepository(User)

@@ -1,0 +1,28 @@
+# Project Coding Rules
+
+## Type Checking & Linting
+- **Ruff**: Used for linting, import sorting (isort), and code formatting
+- **Pyright**: Used for type checking only
+- Configuration is in `pyproject.toml`
+
+## Import Order (enforced by Ruff)
+1. Standard library imports
+2. Third-party imports (`alembic`, `fastapi`, `pydantic`, `sqlalchemy`, etc.)
+3. First-party/local imports (`app.*`)
+
+## Type Checking Comments
+- Do NOT use mypy-style `# type: ignore` comments
+- Use Pyright-style: `# pyright: ignore[errorCode]` when needed
+- The `alembic/` directory is excluded from type checking in `pyproject.toml`
+
+## Running Tools
+```bash
+# Lint and auto-fix
+ruff check . --fix
+
+# Check imports
+ruff check . --select I
+
+# Format code
+ruff format .
+```

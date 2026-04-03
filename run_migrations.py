@@ -1,9 +1,11 @@
 """Run migrations manually."""
-import sys
-sys.path.insert(0, '.')
 
+import sys
+
+sys.path.insert(0, ".")
+
+from alembic import command  # pyright: ignore[reportAttributeAccessIssue]
 from alembic.config import Config
-from alembic import command
 
 # Load Alembic config
 alembic_cfg = Config("alembic.ini")

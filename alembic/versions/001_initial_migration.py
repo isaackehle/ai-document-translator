@@ -1,8 +1,7 @@
 """Initial migration - create users table."""
 
-from alembic import op  # type: ignore
 import sqlalchemy as sa
-
+from alembic import op  # pyright: ignore[reportAttributeAccessIssue, reportMissingImports]
 
 # revision identifiers
 revision = "001"
@@ -21,12 +20,8 @@ def upgrade():
         sa.Column("full_name", sa.String(length=255), nullable=True),
         sa.Column("is_active", sa.Boolean(), nullable=False, default=True),
         sa.Column("is_superuser", sa.Boolean(), nullable=False, default=False),
-        sa.Column(
-            "created_at", sa.DateTime(timezone=True), server_default=sa.text("now()")
-        ),
-        sa.Column(
-            "updated_at", sa.DateTime(timezone=True), server_default=sa.text("now()")
-        ),
+        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()")),
+        sa.Column("updated_at", sa.DateTime(timezone=True), server_default=sa.text("now()")),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(op.f("ix_users_email"), "users", ["email"], unique=True)
