@@ -47,5 +47,32 @@
   "python.linting.flake8Enabled": true,
   "python.linting.pylintEnabled": false,
   "ruff.enable": true,
-  "ruff.organizeImports": true
+  "ruff.organizeImports": true,
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#c34870",
+    "activityBar.background": "#c34870",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#69c03f",
+    "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#c34870",
+    "statusBar.background": "#a33559",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#c34870",
+    "statusBarItem.remoteBackground": "#a33559",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#a33559",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#a3355999",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#a33559",
+  "github.copilot.chat.model": "ollama",
+  "github.copilot.chat.customOAIModels": {
+    "ollama": {
+      "endpoint": "http://localhost:11434/v1",
+      "model": "qwen3.2-coder:7b"
+    }
+  }
 }
