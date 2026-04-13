@@ -6,9 +6,9 @@ AI Document translator; AI Pipeline demo
 
 ### Learning & Planning Documents
 
-- **[docs/hebrew-translation-workflow-plan.md](docs/hebrew-translation-workflow-plan.md)** - AI-generated workflow plan created with Perplexity to explore the ins and outs of building a simple AI translation tool. This document breaks down all the pieces, jargon, and considerations involved in creating an AI-powered document translation pipeline. Great for understanding the landscape and terminology.
+- **[docs/project-overview.md](docs/project-overview.md)** - AI-generated workflow plan created with Perplexity to explore the ins and outs of building a simple AI translation tool. This document breaks down all the pieces, jargon, and considerations involved in creating an AI-powered document translation pipeline. Great for understanding the landscape and terminology.
 
-- **[docs/VSCODE_PYLANCE_SETUP.md](docs/VSCODE_PYLANCE_SETUP.md)** - Complete guide to configuring VS Code and Pylance for Python type checking, including how to handle false positives from SQLAlchemy and Alembic.
+- **[docs/vscode-pylance-setup.md](docs/vscode-pylance-setup.md)** - Complete guide to configuring VS Code and Pylance for Python type checking, including how to handle false positives from SQLAlchemy and Alembic.
 
 ### Project Documentation
 
