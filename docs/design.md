@@ -89,7 +89,7 @@ The system supports local testing with:
 - `/api/v1/translate` - Translation endpoint with language validation
 
 #### Core Services
-1. **Segmentation Service**: 
+1. **Segmentation Service**:
    - Paragraph-based text segmentation
    - Markdown-aware content handling
    - Support for custom segmentation strategies
@@ -135,7 +135,7 @@ The system supports local testing with:
 
 The system can be extended to follow AWS event-driven patterns:
 
-1. **Document Upload**: 
+1. **Document Upload**:
    - Client uploads document via API
    - Backend stores file in S3 and writes job to PostgreSQL
 
@@ -150,14 +150,14 @@ The system can be extended to follow AWS event-driven patterns:
 
 ### AWS Service Mapping
 
-| AWS Service | Usage in System |
-|-------------|-----------------|
-| **S3** | Store source documents and translated outputs |
-| **SQS** | Queue translation jobs for asynchronous processing |
-| **Lambda/ECS** | Execute translation workloads |
-| **RDS/PostgreSQL** | Store job metadata and status tracking |
-| **Secrets Manager** | Secure storage of configuration and API keys |
-| **CloudWatch** | Logging, metrics, and observability |
+| AWS Service         | Usage in System                                    |
+| ------------------- | -------------------------------------------------- |
+| **S3**              | Store source documents and translated outputs      |
+| **SQS**             | Queue translation jobs for asynchronous processing |
+| **Lambda/ECS**      | Execute translation workloads                      |
+| **RDS/PostgreSQL**  | Store job metadata and status tracking             |
+| **Secrets Manager** | Secure storage of configuration and API keys       |
+| **CloudWatch**      | Logging, metrics, and observability                |
 
 ### Scalability Considerations
 
@@ -251,4 +251,3 @@ The current design supports local operation but can scale to:
 ## References
 
 - [[Hebrew Translation Review Workflow Implementation Plan]]
-- [[AWS Refresh Plan for Revalia Prep]]
