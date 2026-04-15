@@ -1,4 +1,10 @@
 
+## v0.2.0 (2026-04-15)
+
+### Feat
+
+- add local AWS development setup and documentation
+
 ## v0.1.1 (2026-04-13)
 
 ## v0.1.0 (2026-04-09)
