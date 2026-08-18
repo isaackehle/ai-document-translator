@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 📚 Project Documentation
+    url: https://github.com/isaackehle/document-translator-service/blob/main/docs/implementation-plan.md
+    about: Review the implementation plan before creating issues
+  - name: 💬 General Questions
+    url: https://github.com/isaackehle/document-translator-service/discussions
+    about: Ask general questions or start discussions
